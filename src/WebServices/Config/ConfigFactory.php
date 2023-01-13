@@ -2,6 +2,7 @@
 
 namespace Gcoop\WebServices\Config;
 
+use Gcoop\WebServices\Config\Exceptions;
 use Gcoop\Cache\CacheFactory;
 use Gcoop\WebServices\Middleware\MiddlewareFactory;
 
@@ -26,7 +27,7 @@ final class ConfigFactory
         require 'config_ws.php';
 
         if (!array_key_exists($webservice, $config_webservices)) {
-            throw new \ConfiguracionInexistente("Configuración de WS inexistente");
+            throw new WSConfiguracionInexistente("Configuración de WS inexistente");
         }
         $config = $config_webservices[$webservice];
         self::validateConfig($config);
@@ -53,15 +54,15 @@ final class ConfigFactory
     {
 
         if (empty($config['base_uri'])) {
-            throw new \ConfiguracionInexistente(strtr(self::PATTERN_MISSING_CONFIG, ['%config' => 'base_uri', '%ws' => self::$webservice]));
+            throw new WSConfiguracionInexistente(strtr(self::PATTERN_MISSING_CONFIG, ['%config' => 'base_uri', '%ws' => self::$webservice]));
         }
 
         if (empty($config['uri'])) {
-            throw new \ConfiguracionInexistente(strtr(self::PATTERN_MISSING_CONFIG, ['%config' => 'uri', '%ws' => self::$webservice]));
+            throw new WSConfiguracionInexistente(strtr(self::PATTERN_MISSING_CONFIG, ['%config' => 'uri', '%ws' => self::$webservice]));
         }
 
         if (empty($config['cache_lifetime'])) {
-            throw new \ConfiguracionInexistente(strtr(self::PATTERN_MISSING_CONFIG, ['%config' => 'cache_lifetime', '%ws' => self::$webservice]));
+            throw new WSConfiguracionInexistente(strtr(self::PATTERN_MISSING_CONFIG, ['%config' => 'cache_lifetime', '%ws' => self::$webservice]));
         }
     }
 }
