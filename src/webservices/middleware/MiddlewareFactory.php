@@ -8,11 +8,15 @@ use Gcoop\Log\LogMiddlewareFactory;
 
 final class MiddlewareFactory
 {
-    public static function get(int $cacheLifeTime, string $wsFileName, string $current_user)
-    {
+    public static function get(
+        int $cacheLifeTime,
+        string $wsFileName,
+        string $current_user,
+        int $truncateSize = 3500
+    ) {
         $stack = HandlerStack::create();
         $cache = CacheMiddlewareFactory::get($cacheLifeTime);
-        $log   = LogMiddlewareFactory::get($wsFileName, $current_user);
+        $log   = LogMiddlewareFactory::get($wsFileName, $current_user, $truncateSize);
 
         $stack->push($cache, 'greedy-cache');
         $stack->push($log, 'webservices_logger');

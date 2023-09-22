@@ -15,10 +15,32 @@ final class ConfigFactory
         self::$webservice = $webservice;
         $config  = self::getWSConfig($webservice);
         $wsFileName = self::getWSFileName();
-        $handler = MiddlewareFactory::get((int) $config['cache_lifetime'], $wsFileName, $current_user);
+        $truncateSize = self::getWSTruncateSize();
+        $handler = MiddlewareFactory::get(
+            (int) $config['cache_lifetime'],
+            $wsFileName,
+            $current_user,
+            $truncateSize
+        );
         $config['handler'] = $handler;
 
         return new Config(self::$webservice, $config);
+    }
+
+    /**
+     * Log line will truncate if it has a number of characters higher than the
+     * number returned by this function. If this number is not set in
+     * config_override.php, it will default to 3500.
+     */
+    private static function getWSTruncateSize() : int
+    {
+        $default_value = 3500;
+        $size = \SugarConfig::getInstace()->get('ws_logger_truncateSize');
+        if (empty($size)) {
+            return $default_value;
+        } else {
+            return (int) $size;
+        }
     }
 
     private static function getWSConfig(string $webservice) :array
