@@ -11,7 +11,7 @@ use Monolog\Formatter\LineFormatter;
 final class LogMiddlewareFactory
 {
 
-    public static function get(string $wsFileName, string $current_user): LogMiddleware
+    public static function get(string $wsFileName, string $current_user, int $truncateSize = 3500): LogMiddleware
     {
         $logger = new Logger('GCA-webservices');
         $stream = new StreamHandler(
@@ -21,7 +21,7 @@ final class LogMiddlewareFactory
         $format = "[%datetime%] [{$current_user}] %message% %context%\n";
         $stream->setFormatter(new LineFormatter($format));
         $logger->pushHandler($stream);
-        $handler = new MultiRecordArrayHandler();
+        $handler = new MultiRecordArrayHandler(null, $truncateSize);
         $middleware = new LogMiddleware($logger, $handler);
 
         return $middleware;
