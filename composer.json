@@ -5,7 +5,7 @@
     "require": {
         "php": "^8.0",
         "kevinrob/guzzle-cache-middleware": "^7.0",
-        "symfony/cache": "^7.3",
+        "symfony/cache": "^6.4",
         "gmponos/guzzle_logger": "^2.2",
         "spatie/array-to-xml": "^3.4",
         "monolog/monolog": "^3.0"
