@@ -35,8 +35,9 @@ final class ConfigFactory
      */
     private static function getWSTruncateSize() : int
     {
+        global $sugar_config;
         $default_value = 3500;
-        $size = \SugarConfig::getInstace()->get('ws_logger_truncateSize');
+        $size = $sugar_config['ws_logger_truncateSize'];
         if (empty($size)) {
             return $default_value;
         } else {
@@ -59,15 +60,16 @@ final class ConfigFactory
 
     private static function getWSFileName() :string
     {
+        global $sugar_config;
         $baseDir = $_SERVER['DOCUMENT_ROOT'].DIRECTORY_SEPARATOR;
-        $logDir  = \SugarConfig::getInstance()->get('log_dir');
+        $logDir  = $sugar_config['log_dir'];
 
         if ($logDir !== null && $logDir !== '.') {
             $baseDir = $logDir.DIRECTORY_SEPARATOR;
         }
         $wsFileName  = $baseDir;
-        $wsFileName .= \SugarConfig::getInstance()->get('logger_ws_guzzle.file.name');
-        $wsFileName .= \SugarConfig::getInstance()->get('logger_ws_guzzle.file.ext');
+        $wsFileName .= $sugar_config['logger_ws_guzzle']['file']['name'];
+        $wsFileName .= $sugar_config['logger_ws_guzzle']['file']['ext'];
         return $wsFileName;
     }
 
