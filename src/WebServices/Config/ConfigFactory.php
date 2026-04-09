@@ -37,12 +37,8 @@ final class ConfigFactory
     {
         global $sugar_config;
         $default_value = 3500;
-        $size = $sugar_config['ws_logger_truncateSize'];
-        if (empty($size)) {
-            return $default_value;
-        } else {
-            return (int) $size;
-        }
+        $size = $sugar_config['ws_logger_truncateSize'] ?? $default_value;
+        return (int) $size;
     }
 
     private static function getWSConfig(string $webservice) :array
@@ -62,14 +58,14 @@ final class ConfigFactory
     {
         global $sugar_config;
         $baseDir = $_SERVER['DOCUMENT_ROOT'].DIRECTORY_SEPARATOR;
-        $logDir  = $sugar_config['log_dir'];
+        $logDir  = $sugar_config['log_dir'] ?? '.';
 
         if ($logDir !== null && $logDir !== '.') {
             $baseDir = $logDir.DIRECTORY_SEPARATOR;
         }
         $wsFileName  = $baseDir;
-        $wsFileName .= $sugar_config['logger_ws_guzzle']['file']['name'];
-        $wsFileName .= $sugar_config['logger_ws_guzzle']['file']['ext'];
+        $wsFileName .= $sugar_config['logger_ws_guzzle']['file']['name'] ?? 'suitecrm_webservices';
+        $wsFileName .= $sugar_config['logger_ws_guzzle']['file']['ext'] ?? '.log';
         return $wsFileName;
     }
 
