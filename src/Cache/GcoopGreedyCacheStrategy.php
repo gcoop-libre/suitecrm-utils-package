@@ -21,7 +21,7 @@ class GcoopGreedyCacheStrategy extends GreedyCacheStrategy
      *          'cache_key_filter' => 'horaTx,secuencia'
      *      ],
      */
-    protected function getCacheKey(RequestInterface $request, KeyValueHttpHeader $varyHeaders = null)
+    protected function getCacheKey(RequestInterface $request, ?KeyValueHttpHeader $varyHeaders = null)
     {
         $uri = $request->getUri();
 
