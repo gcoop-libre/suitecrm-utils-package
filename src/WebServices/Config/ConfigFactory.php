@@ -49,6 +49,14 @@ final class ConfigFactory
             throw new WSConfiguracionInexistente("Configuración de WS inexistente");
         }
         $config = $config_webservices[$webservice];
+
+        if (!isset($config['log'])) {
+            $config['log'] = [
+                'on_exception_only' => true,
+                'statistics' => (bool) ($config['log_time'] ?? false),
+            ];
+        }
+
         self::validateConfig($config);
 
         return $config;
